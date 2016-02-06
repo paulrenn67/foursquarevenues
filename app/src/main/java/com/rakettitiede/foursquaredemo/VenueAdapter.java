@@ -13,6 +13,12 @@ public class VenueAdapter extends ArrayAdapter<Venue> {
     private String mNoAddress;
     private String mDistanceFormat;
 
+    private static class ViewHolder {
+        TextView mName;
+        TextView mAddress;
+        TextView mDistance;
+    }
+
     public VenueAdapter(Context context, ArrayList<Venue> venues, String noAddress, String distanceFormat) {
         super(context, 0, venues);
         mNoAddress = noAddress;
@@ -23,18 +29,21 @@ public class VenueAdapter extends ArrayAdapter<Venue> {
     public View getView(int position, View convertView, ViewGroup parent) {
         Venue venue = getItem(position);
 
+        ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.venue_list_item, parent, false);
+            viewHolder = new ViewHolder();
+            viewHolder.mName =  (TextView) convertView.findViewById(R.id.name);
+            viewHolder.mAddress = (TextView) convertView.findViewById(R.id.address);
+            viewHolder.mDistance = (TextView) convertView.findViewById(R.id.distance);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        TextView name = (TextView) convertView.findViewById(R.id.name);
-        name.setText(venue.getName());
-
-        TextView address = (TextView) convertView.findViewById(R.id.address);
-        address.setText(venue.getAddress() != null ? venue.getAddress() : mNoAddress);
-
-        TextView distance = (TextView) convertView.findViewById(R.id.distance);
-        distance.setText(String.format(mDistanceFormat, venue.getDistance()));
+        viewHolder.mName.setText(venue.getName());
+        viewHolder.mAddress.setText(venue.getAddress() != null ? venue.getAddress() : mNoAddress);
+        viewHolder.mDistance.setText(String.format(mDistanceFormat, venue.getDistance()));
 
         return convertView;
     }
