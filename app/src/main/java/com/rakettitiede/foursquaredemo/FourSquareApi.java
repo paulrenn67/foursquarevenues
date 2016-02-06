@@ -16,6 +16,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class FourSquareApi implements Response.Listener<JSONObject>, Response.ErrorListener {
     private final static String LOG_TAG = FourSquareApi.class.getSimpleName();
     private final static String REQUEST_TAG = "tag";
@@ -37,13 +40,13 @@ public class FourSquareApi implements Response.Listener<JSONObject>, Response.Er
         mListener = listener;
     }
 
-    public void searchVenues(String keyword) {
+    public void searchVenues(String keyword) throws UnsupportedEncodingException {
         if (TextUtils.isEmpty(keyword)) {
             mListener.onVenueResponse(new VenueModel());
             return;
         }
 
-        Location location =null;
+        Location location;
         try {
             location =  mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             if (location == null) {
@@ -64,7 +67,7 @@ public class FourSquareApi implements Response.Listener<JSONObject>, Response.Er
                 "&client_secret=" + CLIENT_SECRET +
                 "&v=20160206" +
                 "&ll=" + location.getLatitude() + "," + location.getLongitude() +
-                "&query=" + keyword;
+                "&query=" + URLEncoder.encode(keyword, "utf-8");
 
         JsonObjectRequest request = new JsonObjectRequest(url, null, this, this);
         request.setTag(REQUEST_TAG);

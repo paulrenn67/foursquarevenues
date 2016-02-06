@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Make FourSquare REST service search for venues
  */
@@ -51,7 +53,11 @@ public class MainActivity extends AppCompatActivity implements FourSquareApi.Lis
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.d(LOG_TAG, "onTextChanged " + s);
-                mFourSquareApi.searchVenues(s.toString());
+                try {
+                    mFourSquareApi.searchVenues(s.toString());
+                } catch (UnsupportedEncodingException e) {
+                    onVenueError(e.getMessage());
+                }
             }
 
             @Override
@@ -86,9 +92,9 @@ public class MainActivity extends AppCompatActivity implements FourSquareApi.Lis
     public void onVenueError(String errorMessage) {
         Log.e(LOG_TAG, errorMessage);
 
-        Toast toast= Toast.makeText(getApplicationContext(),
+        Toast toast = Toast.makeText(getApplicationContext(),
                 errorMessage, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
     }
 }
