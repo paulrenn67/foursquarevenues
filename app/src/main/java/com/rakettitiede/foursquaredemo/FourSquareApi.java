@@ -43,9 +43,15 @@ public class FourSquareApi implements Response.Listener<JSONObject>, Response.Er
             return;
         }
 
-        Location location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        if (location == null) {
-            mListener.onVenueError("No location available");
+        Location location =null;
+        try {
+            location =  mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (location == null) {
+                mListener.onVenueError("No location available");
+                return;
+            }
+        } catch (SecurityException e) {
+            mListener.onVenueError("This application requires Location capability");
             return;
         }
 
