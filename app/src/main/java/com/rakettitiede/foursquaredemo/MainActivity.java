@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -84,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements FourSquareApi.Lis
     @Override
     public void onVenueError(String errorMessage) {
         Log.e(LOG_TAG, errorMessage);
-        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG);
+
+        Toast toast= Toast.makeText(getApplicationContext(),
+                errorMessage, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
     }
 }
