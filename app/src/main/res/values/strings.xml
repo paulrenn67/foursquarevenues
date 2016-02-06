@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FourSquare Venues Demo</string>
+    <string name="hint">Enter venue name</string>
+    <string name="distance_meters_format">%d meters</string>
+    <string name="no_address">(no address available)</string>
+    <string name="no_results">No results found</string>
+</resources>
