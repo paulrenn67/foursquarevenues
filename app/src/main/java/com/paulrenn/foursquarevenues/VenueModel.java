@@ -1,4 +1,4 @@
-package com.rakettitiede.foursquaredemo;
+package com.paulrenn.foursquarevenues;
 
 import android.util.Log;
 
@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class VenueModel extends ArrayList<Venue> {
     private final static String LOG_TAG = VenueModel.class.getSimpleName();

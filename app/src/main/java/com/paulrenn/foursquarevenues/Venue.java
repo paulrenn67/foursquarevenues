@@ -1,4 +1,4 @@
-package com.rakettitiede.foursquaredemo;
+package com.paulrenn.foursquarevenues;
 
 import android.util.Log;
 

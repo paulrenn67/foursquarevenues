@@ -1,4 +1,4 @@
-package com.rakettitiede.foursquaredemo;
+package com.paulrenn.foursquarevenues;
 
 import android.content.Context;
 import android.location.Location;

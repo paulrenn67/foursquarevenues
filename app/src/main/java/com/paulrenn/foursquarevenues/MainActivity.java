@@ -1,4 +1,4 @@
-package com.rakettitiede.foursquaredemo;
+package com.paulrenn.foursquarevenues;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Make FourSquare REST service search for venues
@@ -85,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements FourSquareApi.Lis
     public void onVenueResponse(VenueModel venues) {
         mVenueModel.clear();
         mVenueModel.addAll(venues);
+
+        // Sort results by distance to the venue.
+        Collections.sort(mVenueModel, new DistanceComparator());
+
         mVenueAdapter.notifyDataSetChanged();
     }
 
@@ -96,5 +102,14 @@ public class MainActivity extends AppCompatActivity implements FourSquareApi.Lis
                 errorMessage, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
+    }
+
+    /**
+     * Comparator to allow sorting by distance to the venue.
+     */
+    public class DistanceComparator implements Comparator<Venue> {
+        public int compare(Venue left, Venue right) {
+            return (int) (left.getDistance() - right.getDistance());
+        }
     }
 }
